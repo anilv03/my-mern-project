@@ -121,7 +121,7 @@ app.use('/api/v1/reports', require('./routes/report.routes'));
 app.use('/api/v1/public', require('./routes/public.routes'));
 
 if (process.env.NODE_ENV === 'production') {
-  const publicPath = path.join(__dirname, '..', 'public');
+  const publicPath = path.join(__dirname, '..', 'client', 'dist');
   if (fs.existsSync(publicPath)) {
     app.use(express.static(publicPath));
     app.get('*', (req, res, next) => {
