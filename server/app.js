@@ -15,7 +15,16 @@ const ApiError = require('./utils/ApiError');
 const app = express();
 
 app.set('etag', false);
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: {
+      imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "https://picsum.photos", "https://images.unsplash.com", "blob:", "https:"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      connectSrc: ["'self'", "https:", "wss:"],
+    },
+  },
+}));
 app.use(cors({
   origin: process.env.CORS_ORIGINS?.split(',') || '*',
   credentials: true,
