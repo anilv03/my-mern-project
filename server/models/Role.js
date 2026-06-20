@@ -1,0 +1,39 @@
+const mongoose = require('mongoose');
+
+const roleSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Role name is required'],
+      unique: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
+    permissions: {
+      type: [String],
+      default: [],
+    },
+    isSystem: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+roleSchema.virtual('userCount', {
+  ref: 'User',
+  localField: 'name',
+  foreignField: 'role',
+  count: true,
+});
+
+roleSchema.set('toJSON', { virtuals: true });
+roleSchema.set('toObject', { virtuals: true });
+
+module.exports = mongoose.model('Role', roleSchema);

@@ -1,0 +1,1 @@
+export default function AdminPayments() { return <div>Admin Payments Page</div> }
